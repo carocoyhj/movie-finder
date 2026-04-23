@@ -75,18 +75,6 @@ src/
   store/
   types/
 ```
-
-### Components
-
-- `atoms/`: small reusable UI building blocks
-- `molecules/`: combined UI pieces like movie cards and search blocks
-- `organisms/`: larger sections like the app header and sheets
-
-### Types
-
-- `src/types/omdb.ts`: shared OMDb data types
-- `src/types/components.ts`: component prop types
-
 ## Environment
 
 Required:
@@ -101,20 +89,3 @@ Without this key, movie search and detail requests will fail.
 
 This app is ready to deploy on Vercel.
 
-If you deploy with Vercel, make sure to add this environment variable in the project settings:
-
-```bash
-VITE_OMDB_API_KEY
-```
-
-Build command:
-
-```bash
-npm run build
-```
-
-Output directory:
-
-```bash
-dist
-```
