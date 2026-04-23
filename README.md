@@ -85,7 +85,4 @@ VITE_OMDB_API_KEY
 
 Without this key, movie search and detail requests will fail.
 
-## Deployment
-
-This app is ready to deploy on Vercel.
 
