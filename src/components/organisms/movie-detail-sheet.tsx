@@ -1,5 +1,3 @@
-import type { MovieDetails } from "@/services/omdb-service";
-
 import MovieDetailPanel from "@/components/molecules/movie-detail-panel";
 import {
 	Sheet,
@@ -7,16 +5,7 @@ import {
 	SheetDescription,
 	SheetTitle,
 } from "@/components/atoms/sheet";
-
-type MovieDetailSheetProps = {
-	open: boolean;
-	onOpenChange: (open: boolean) => void;
-	movie: MovieDetails | null;
-	isLoading?: boolean;
-	errorMessage?: string | null;
-	isSaved?: boolean;
-	onToggleWatchlist?: (movie: MovieDetails) => void;
-};
+import type { MovieDetailSheetProps } from "@/types/components";
 
 const MovieDetailSheet = ({
 	open,

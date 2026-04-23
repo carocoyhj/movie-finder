@@ -1,40 +1,34 @@
 import {
   MagnifyingGlass,
-  SlidersHorizontal,
   SpinnerGap,
   WarningCircle,
 } from "@phosphor-icons/react";
 
-import { Badge } from "@/components/atoms/badge";
 import { Button } from "@/components/atoms/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/atoms/card";
 import { Input } from "@/components/atoms/input";
-
-type SearchShowcaseProps = {
-  query: string;
-  onQueryChange: (value: string) => void;
-  onSubmit: () => void;
-  isLoading?: boolean;
-  totalResults: number;
-  errorMessage?: string | null;
-  selectedMovieTitle?: string;
-};
+import type { SearchShowcaseProps } from "@/types/components";
 
 const SearchShowcase = ({
   query,
   onQueryChange,
   onSubmit,
+  selectedType,
+  onTypeChange,
   isLoading = false,
-  totalResults,
-  errorMessage,
-  selectedMovieTitle,
 }: SearchShowcaseProps) => {
+  const typeOptions = [
+    { label: "All", value: "all" as const },
+    { label: "Movies", value: "movie" as const },
+    { label: "Series", value: "series" as const },
+    { label: "Episodes", value: "episode" as const },
+  ];
+
   return (
     <div>
       <Card className="overflow-hidden rounded-[2rem] border-white/10 bg-white/8 py-0 text-white shadow-2xl shadow-black/20">
@@ -44,10 +38,10 @@ const SearchShowcase = ({
               <p className="text-sm uppercase tracking-[0.35em] text-white/40">
                 Start your search
               </p>
-              <h2 className="max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              <h2 className="max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
                 Discover Your Next Favorite Film
               </h2>
-              <p className="max-w-2xl text-base leading-7 text-white/68">
+              <p className="max-w-3xl text-base leading-7 text-white/68">
                 Search by title, explore movie details, and keep your favorites
                 close by.
               </p>
@@ -90,16 +84,25 @@ const SearchShowcase = ({
             </div>
 
             <div className="mt-4 flex flex-wrap items-center gap-2">
-              <Badge className="rounded-full border-white/10 bg-white/8 text-white hover:bg-white/10">
-                {totalResults} result{totalResults === 1 ? "" : "s"}
-              </Badge>
-              <Badge className="rounded-full border-white/10 bg-white/8 text-white hover:bg-white/10">
-                Ready to explore
-              </Badge>
-              <Badge className="rounded-full border-white/10 bg-white/8 text-white hover:bg-white/10">
-                <SlidersHorizontal size={14} />
-                Selected: {selectedMovieTitle ?? "None yet"}
-              </Badge>
+              <div className="flex flex-wrap gap-2">
+                {typeOptions.map((option) => (
+                  <Button
+                    key={option.value}
+                    type="button"
+                    variant={
+                      selectedType === option.value ? "secondary" : "ghost"
+                    }
+                    className={`rounded-full border ${
+                      selectedType === option.value
+                        ? "border-white/20 bg-white text-slate-950 hover:bg-white/90"
+                        : "border-white/10 bg-white/8 text-white hover:bg-white/12"
+                    }`}
+                    onClick={() => onTypeChange(option.value)}
+                  >
+                    {option.label}
+                  </Button>
+                ))}
+              </div>
             </div>
           </div>
 

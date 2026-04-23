@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import type { MovieDetails } from "@/services/omdb-service";
+import type { MovieDetails } from "@/types/omdb";
 
 type WatchlistState = {
 	items: MovieDetails[];

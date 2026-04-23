@@ -1,17 +1,11 @@
 import { BookmarkSimple, ClockCounterClockwise, Star } from "@phosphor-icons/react";
 
-import type { MovieDetails } from "@/services/omdb-service";
-
 import { Badge } from "@/components/atoms/badge";
 import { Button } from "@/components/atoms/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/card";
 import { ScrollArea } from "@/components/atoms/scroll-area";
 import { Separator } from "@/components/atoms/separator";
-
-type WatchlistPanelProps = {
-	items: MovieDetails[];
-	onRemove: (imdbID: string) => void;
-};
+import type { WatchlistPanelProps } from "@/types/components";
 
 const WatchlistPanel = ({ items, onRemove }: WatchlistPanelProps) => {
 	return (

@@ -1,45 +1,12 @@
 import axios from "axios";
+import type {
+	MovieDetails,
+	MovieSearchItem,
+	SearchMoviesParams,
+	SearchMoviesResult,
+} from "@/types/omdb";
 
 const OMDB_BASE_URL = "https://www.omdbapi.com/";
-
-export type MovieSearchItem = {
-	Title: string;
-	Year: string;
-	imdbID: string;
-	Type: string;
-	Poster: string;
-};
-
-export type MovieDetails = {
-	Title: string;
-	Year: string;
-	Rated: string;
-	Released: string;
-	Runtime: string;
-	Genre: string;
-	Director: string;
-	Writer: string;
-	Actors: string;
-	Plot: string;
-	Language: string;
-	Country: string;
-	Awards: string;
-	Poster: string;
-	Ratings: Array<{
-		Source: string;
-		Value: string;
-	}>;
-	Metascore: string;
-	imdbRating: string;
-	imdbVotes: string;
-	imdbID: string;
-	Type: string;
-	DVD: string;
-	BoxOffice: string;
-	Production: string;
-	Website: string;
-	Response: "True";
-};
 
 type OmdbMovieDetailsResponse =
 	| MovieDetails
@@ -58,20 +25,6 @@ type OmdbSearchResponse =
 			Response: "False";
 			Error: string;
 	  };
-
-export type SearchMoviesParams = {
-	query: string;
-	page?: number;
-	type?: "movie" | "series" | "episode";
-	year?: string;
-};
-
-export type SearchMoviesResult = {
-	movies: MovieSearchItem[];
-	totalResults: number;
-	page: number;
-	hasMore: boolean;
-};
 
 const omdbApi = axios.create({
 	baseURL: OMDB_BASE_URL,

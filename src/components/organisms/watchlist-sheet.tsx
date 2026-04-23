@@ -1,5 +1,3 @@
-import type { MovieDetails } from "@/services/omdb-service";
-
 import WatchlistPanel from "@/components/molecules/watchlist-panel";
 import {
 	Sheet,
@@ -7,13 +5,7 @@ import {
 	SheetDescription,
 	SheetTitle,
 } from "@/components/atoms/sheet";
-
-type WatchlistSheetProps = {
-	open: boolean;
-	onOpenChange: (open: boolean) => void;
-	items: MovieDetails[];
-	onRemove: (imdbID: string) => void;
-};
+import type { WatchlistSheetProps } from "@/types/components";
 
 const WatchlistSheet = ({
 	open,

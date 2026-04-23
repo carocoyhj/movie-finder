@@ -4,9 +4,10 @@ import MovieCard from "@/components/molecules/movie-card";
 import MovieDetailSheet from "@/components/organisms/movie-detail-sheet";
 import SearchShowcase from "@/components/molecules/search-showcase";
 import WatchlistSheet from "@/components/organisms/watchlist-sheet";
-import type { MovieDetails, MovieSearchItem } from "@/services/omdb-service";
 import { getMovieDetails, searchMovies } from "@/services/omdb-service";
 import { useWatchlistStore } from "@/store/watchlist-store";
+import { toast } from "sonner";
+import type { MovieDetails, MovieSearchItem } from "@/types/omdb";
 
 const POPULAR_PICK_IDS = [
   "tt0816692",
@@ -28,8 +29,10 @@ const toMovieSearchItem = (movie: MovieDetails): MovieSearchItem => ({
 const HomePage = () => {
   const [draftQuery, setDraftQuery] = useState("");
   const [query, setQuery] = useState("");
+  const [selectedType, setSelectedType] = useState<
+    "all" | "movie" | "series" | "episode"
+  >("all");
   const [movies, setMovies] = useState<MovieSearchItem[]>([]);
-  const [totalResults, setTotalResults] = useState(0);
   const [searchError, setSearchError] = useState<string | null>(null);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
   const [selectedImdbID, setSelectedImdbID] = useState<string | null>(null);
@@ -74,21 +77,22 @@ const HomePage = () => {
           }
 
           setMovies(movies);
-          setTotalResults(movies.length);
           setSelectedImdbID(null);
           setSelectedMovie(null);
           setDetailError(null);
           return;
         }
 
-        const result = await searchMovies({ query });
+        const result = await searchMovies({
+          query,
+          type: selectedType === "all" ? undefined : selectedType,
+        });
 
         if (isCancelled) {
           return;
         }
 
         setMovies(result.movies);
-        setTotalResults(result.totalResults);
         setSelectedImdbID(null);
         setSelectedMovie(null);
         setDetailError(null);
@@ -98,7 +102,6 @@ const HomePage = () => {
         }
 
         setMovies([]);
-        setTotalResults(0);
         setSelectedImdbID(null);
         setSelectedMovie(null);
         setSearchError(
@@ -118,7 +121,7 @@ const HomePage = () => {
     return () => {
       isCancelled = true;
     };
-  }, [query]);
+  }, [query, selectedType]);
 
   useEffect(() => {
     if (!selectedImdbID) {
@@ -173,20 +176,36 @@ const HomePage = () => {
     toggleWatchlist(movie);
   };
 
-  const toggleWatchlistById = (imdbID: string) => {
+  const toggleWatchlistById = async (imdbID: string) => {
     if (isInWatchlist(imdbID)) {
       removeFromWatchlist(imdbID);
+      const removedMovie = watchlist.find((item) => item.imdbID === imdbID);
+      toast.success(
+        removedMovie
+          ? `${removedMovie.Title} removed from your watchlist`
+          : "Removed from your watchlist",
+      );
       return;
     }
 
     if (selectedMovie?.imdbID === imdbID) {
       toggleWatchlistByMovie(selectedMovie);
+      toast.success(`${selectedMovie.Title} added to your watchlist`);
+      return;
+    }
+
+    try {
+      const movie = await getMovieDetails(imdbID);
+      toggleWatchlistByMovie(movie);
+      toast.success(`${movie.Title} added to your watchlist`);
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Could not add this movie to your watchlist.",
+      );
     }
   };
-
-  const selectedMovieTitle =
-    selectedMovie?.Title ??
-    movies.find((movie) => movie.imdbID === selectedImdbID)?.Title;
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(244,63,94,0.18),_transparent_24%),radial-gradient(circle_at_right,_rgba(251,191,36,0.12),_transparent_18%),linear-gradient(180deg,_#060816_0%,_#0a1020_42%,_#05070f_100%)] text-white">
@@ -199,10 +218,9 @@ const HomePage = () => {
           query={draftQuery}
           onQueryChange={setDraftQuery}
           onSubmit={handleSearchSubmit}
+          selectedType={selectedType}
+          onTypeChange={setSelectedType}
           isLoading={isSearchLoading}
-          totalResults={totalResults}
-          errorMessage={searchError}
-          selectedMovieTitle={selectedMovieTitle}
         />
 
         <section className="space-y-5">
@@ -224,7 +242,7 @@ const HomePage = () => {
             </p>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-3 xl:grid-cols-4">
             {movies.map((movie) => (
               <MovieCard
                 key={movie.imdbID}

@@ -7,18 +7,7 @@ import {
 import { Badge } from "@/components/atoms/badge";
 import { Button } from "@/components/atoms/button";
 import { Card, CardContent } from "@/components/atoms/card";
-
-type MovieCardProps = {
-  imdbID: string;
-  title: string;
-  year: string;
-  type: string;
-  poster: string;
-  isSaved?: boolean;
-  isSelected?: boolean;
-  onSelect?: (imdbID: string) => void;
-  onToggleWatchlist?: (imdbID: string) => void;
-};
+import type { MovieCardProps } from "@/types/components";
 
 const MovieCard = ({
   imdbID,
@@ -79,7 +68,7 @@ const MovieCard = ({
             <h3 className="text-lg font-semibold leading-tight">{title}</h3>
             <Badge
               variant="secondary"
-              className="rounded-full bg-white/8 text-white hover:bg-white/10"
+              className="rounded-full bg-white/8 text-white hover:bg-white/10 uppercase"
             >
               {type}
             </Badge>

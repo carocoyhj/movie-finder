@@ -1,12 +1,8 @@
-import { BookmarkSimple, FilmSlate } from "@phosphor-icons/react";
+import { BookmarkSimple } from "@phosphor-icons/react";
 
-import { Avatar, AvatarFallback } from "@/components/atoms/avatar";
 import { Button } from "@/components/atoms/button";
-
-type AppHeaderProps = {
-	onOpenWatchlist?: () => void;
-	watchlistCount?: number;
-};
+import logo from "@/assets/cinesave.png";
+import type { AppHeaderProps } from "@/types/components";
 
 const AppHeader = ({
 	onOpenWatchlist,
@@ -14,15 +10,14 @@ const AppHeader = ({
 }: AppHeaderProps) => {
 	return (
 		<header className="flex flex-col gap-4 rounded-[2rem] border border-white/10 bg-white/6 px-5 py-4 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:px-6">
-			<div className="flex items-center gap-3">
-				<div className="flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-rose-500 via-orange-400 to-amber-300 text-slate-950 shadow-lg shadow-rose-950/30">
-					<FilmSlate size={22} weight="fill" />
-				</div>
+			<div className="flex items-center">
+				<img
+					src={logo}
+					alt="CineSave logo"
+					className="size-16 shrink-0 object-contain drop-shadow-[0_10px_24px_rgba(216,53,126,0.28)]"
+				/>
 				<div>
-					<p className="text-sm uppercase tracking-[0.35em] text-white/45">Movie Finder</p>
-					<h1 className="text-xl font-semibold text-white">
-						Search, inspect, and save your next watch
-					</h1>
+					<p className="text-xl font-bold uppercase tracking-[0.35em] text-white/45">CineSave</p>
 				</div>
 			</div>
 
@@ -34,9 +29,6 @@ const AppHeader = ({
 					<BookmarkSimple size={18} weight="fill" />
 					Watchlist ({watchlistCount})
 				</Button>
-				<Avatar className="size-10 border border-white/10 bg-white/10">
-					<AvatarFallback className="bg-transparent text-sm text-white">MF</AvatarFallback>
-				</Avatar>
 			</div>
 		</header>
 	);

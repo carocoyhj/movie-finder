@@ -7,20 +7,11 @@ import {
 	Star,
 } from "@phosphor-icons/react";
 
-import type { MovieDetails } from "@/services/omdb-service";
-
 import { Badge } from "@/components/atoms/badge";
 import { Button } from "@/components/atoms/button";
 import { Card, CardContent } from "@/components/atoms/card";
 import { Separator } from "@/components/atoms/separator";
-
-type MovieDetailPanelProps = {
-	movie: MovieDetails | null;
-	isLoading?: boolean;
-	errorMessage?: string | null;
-	isSaved?: boolean;
-	onToggleWatchlist?: (movie: MovieDetails) => void;
-};
+import type { MovieDetailPanelProps } from "@/types/components";
 
 const MovieDetailPanel = ({
 	movie,
