@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import AppHeader from "@/components/app-header";
-import MovieCard from "@/components/movie-card";
-import MovieDetailSheet from "@/components/movie-detail-sheet";
-import SearchShowcase from "@/components/search-showcase";
-import WatchlistSheet from "@/components/watchlist-sheet";
+import AppHeader from "@/components/organisms/app-header";
+import MovieCard from "@/components/molecules/movie-card";
+import MovieDetailSheet from "@/components/organisms/movie-detail-sheet";
+import SearchShowcase from "@/components/molecules/search-showcase";
+import WatchlistSheet from "@/components/organisms/watchlist-sheet";
 import type { MovieDetails, MovieSearchItem } from "@/services/omdb-service";
 import { getMovieDetails, searchMovies } from "@/services/omdb-service";
 import { useWatchlistStore } from "@/store/watchlist-store";
@@ -122,8 +122,6 @@ const HomePage = () => {
 
   useEffect(() => {
     if (!selectedImdbID) {
-      setSelectedMovie(null);
-      setDetailError(null);
       return;
     }
 

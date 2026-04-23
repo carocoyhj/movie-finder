@@ -1,7 +1,12 @@
 import type { MovieDetails } from "@/services/omdb-service";
 
-import MovieDetailPanel from "@/components/movie-detail-panel";
-import { Sheet, SheetContent, SheetDescription, SheetTitle } from "@/components/ui/sheet";
+import MovieDetailPanel from "@/components/molecules/movie-detail-panel";
+import {
+	Sheet,
+	SheetContent,
+	SheetDescription,
+	SheetTitle,
+} from "@/components/atoms/sheet";
 
 type MovieDetailSheetProps = {
 	open: boolean;

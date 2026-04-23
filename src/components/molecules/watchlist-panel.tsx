@@ -2,11 +2,11 @@ import { BookmarkSimple, ClockCounterClockwise, Star } from "@phosphor-icons/rea
 
 import type { MovieDetails } from "@/services/omdb-service";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/atoms/badge";
+import { Button } from "@/components/atoms/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/card";
+import { ScrollArea } from "@/components/atoms/scroll-area";
+import { Separator } from "@/components/atoms/separator";
 
 type WatchlistPanelProps = {
 	items: MovieDetails[];
@@ -59,7 +59,11 @@ const WatchlistPanel = ({ items, onRemove }: WatchlistPanelProps) => {
 								<div className="flex gap-4">
 									<img
 										className="h-24 w-18 rounded-xl object-cover"
-										src={item.Poster !== "N/A" ? item.Poster : "https://placehold.co/160x240/111827/E5E7EB?text=No+Poster"}
+										src={
+											item.Poster !== "N/A"
+												? item.Poster
+												: "https://placehold.co/160x240/111827/E5E7EB?text=No+Poster"
+										}
 										alt={item.Title}
 									/>
 									<div className="flex min-w-0 flex-1 flex-col justify-between">

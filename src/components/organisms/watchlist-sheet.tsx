@@ -1,7 +1,12 @@
 import type { MovieDetails } from "@/services/omdb-service";
 
-import WatchlistPanel from "@/components/watchlist-panel";
-import { Sheet, SheetContent, SheetDescription, SheetTitle } from "@/components/ui/sheet";
+import WatchlistPanel from "@/components/molecules/watchlist-panel";
+import {
+	Sheet,
+	SheetContent,
+	SheetDescription,
+	SheetTitle,
+} from "@/components/atoms/sheet";
 
 type WatchlistSheetProps = {
 	open: boolean;

@@ -9,10 +9,10 @@ import {
 
 import type { MovieDetails } from "@/services/omdb-service";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/atoms/badge";
+import { Button } from "@/components/atoms/button";
+import { Card, CardContent } from "@/components/atoms/card";
+import { Separator } from "@/components/atoms/separator";
 
 type MovieDetailPanelProps = {
 	movie: MovieDetails | null;
@@ -92,7 +92,8 @@ const MovieDetailPanel = ({
 
 	const genres = movie.Genre?.split(",").map((entry) => entry.trim()).filter(Boolean) ?? [];
 	const hasPoster = movie.Poster && movie.Poster !== "N/A";
-	const ratingLabel = movie.imdbRating && movie.imdbRating !== "N/A" ? `${movie.imdbRating} IMDb` : "No IMDb rating";
+	const ratingLabel =
+		movie.imdbRating && movie.imdbRating !== "N/A" ? `${movie.imdbRating} IMDb` : "No IMDb rating";
 
 	return (
 		<Card className="overflow-hidden rounded-[2rem] border-white/10 bg-white/8 py-0 text-white shadow-2xl shadow-black/20">

@@ -5,10 +5,16 @@ import {
   WarningCircle,
 } from "@phosphor-icons/react";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/atoms/badge";
+import { Button } from "@/components/atoms/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/atoms/card";
+import { Input } from "@/components/atoms/input";
 
 type SearchShowcaseProps = {
   query: string;
@@ -26,10 +32,11 @@ const SearchShowcase = ({
   onSubmit,
   isLoading = false,
   totalResults,
+  errorMessage,
   selectedMovieTitle,
 }: SearchShowcaseProps) => {
   return (
-    <div className="">
+    <div>
       <Card className="overflow-hidden rounded-[2rem] border-white/10 bg-white/8 py-0 text-white shadow-2xl shadow-black/20">
         <CardContent className="space-y-8 p-6 sm:p-8">
           <div className="space-y-5">
@@ -37,10 +44,10 @@ const SearchShowcase = ({
               <p className="text-sm uppercase tracking-[0.35em] text-white/40">
                 Start your search
               </p>
-              <h2 className="max-w-4xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
+              <h2 className="max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-5xl">
                 Discover Your Next Favorite Film
               </h2>
-              <p className="max-w-3xl text-base leading-7 text-white/68">
+              <p className="max-w-2xl text-base leading-7 text-white/68">
                 Search by title, explore movie details, and keep your favorites
                 close by.
               </p>
@@ -96,42 +103,49 @@ const SearchShowcase = ({
             </div>
           </div>
 
-          <div>
-            <div className="rounded-2xl border border-rose-400/20 bg-gradient-to-br from-rose-400/10 to-rose-400/5 p-6 shadow-sm backdrop-blur">
-              {/* Header */}
-              <div className="flex items-center gap-3 text-rose-200">
+          <Card className="border-rose-500/20 bg-rose-500/5 text-white shadow-sm">
+            <CardHeader className="space-y-3">
+              <div className="flex items-center gap-2 text-rose-300">
                 <WarningCircle size={18} weight="fill" />
-                <p className="text-xs font-medium uppercase tracking-[0.3em]">
+                <span className="text-xs font-medium uppercase tracking-[0.28em]">
                   What you can do
-                </p>
+                </span>
               </div>
 
-              {/* Title */}
-              <h3 className="mt-3 text-lg font-semibold text-white">
-                Discover and track your favorite movies
-              </h3>
+              <div className="space-y-1">
+                <CardTitle className="text-xl text-white">
+                  A simple way to browse movies
+                </CardTitle>
+              </div>
+            </CardHeader>
 
-              {/* Features */}
-              <ul className="mt-5 space-y-3 text-sm text-white/75">
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-rose-300" />
-                  Search movies instantly by title
+            <CardContent>
+              <ul className="space-y-3 text-sm text-white/80">
+                <li className="flex items-start gap-3">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-rose-300" />
+                  <span>
+                    Search by title and open a movie to see more details.
+                  </span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-rose-300" />
-                  View ratings, cast, and story details
+                <li className="flex items-start gap-3">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-rose-300" />
+                  <span>
+                    Browse ratings, cast, and story information in one place.
+                  </span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-rose-300" />
-                  Save movies for later
+                <li className="flex items-start gap-3">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-rose-300" />
+                  <span>Save movies you want to revisit later.</span>
                 </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-rose-300" />
-                  Clean layout designed for easy browsing
+                <li className="flex items-start gap-3">
+                  <span className="mt-2 h-1.5 w-1.5 rounded-full bg-rose-300" />
+                  <span>
+                    Enjoy a cleaner browsing experience as you explore.
+                  </span>
                 </li>
               </ul>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </CardContent>
       </Card>
     </div>
