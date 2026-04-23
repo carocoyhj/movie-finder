@@ -1,6 +1,6 @@
 import { BookmarkSimple, ClockCounterClockwise, Star } from "@phosphor-icons/react";
 
-import type { MovieDetails } from "@/services";
+import type { MovieDetails } from "@/services/omdb-service";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

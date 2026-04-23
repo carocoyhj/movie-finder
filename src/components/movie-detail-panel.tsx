@@ -7,7 +7,7 @@ import {
 	Star,
 } from "@phosphor-icons/react";
 
-import type { MovieDetails } from "@/services";
+import type { MovieDetails } from "@/services/omdb-service";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -96,8 +96,8 @@ const MovieDetailPanel = ({
 
 	return (
 		<Card className="overflow-hidden rounded-[2rem] border-white/10 bg-white/8 py-0 text-white shadow-2xl shadow-black/20">
-			<div className="grid gap-0 xl:grid-cols-[260px_1fr]">
-				<div className="relative min-h-[320px]">
+			<div className="flex flex-col">
+				<div className="relative h-[320px] max-h-[45vh] sm:h-[420px] sm:max-h-[50vh]">
 					{hasPoster ? (
 						<img className="h-full w-full object-cover" src={movie.Poster} alt={movie.Title} />
 					) : (
@@ -105,7 +105,7 @@ const MovieDetailPanel = ({
 							<FilmStrip size={40} />
 						</div>
 					)}
-					<div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/25 to-transparent xl:bg-gradient-to-r" />
+					<div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/25 to-transparent" />
 				</div>
 
 				<CardContent className="space-y-6 p-6 sm:p-8">

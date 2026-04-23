@@ -3,7 +3,15 @@ import { BookmarkSimple, FilmSlate } from "@phosphor-icons/react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
-const AppHeader = () => {
+type AppHeaderProps = {
+  onOpenWatchlist?: () => void;
+  watchlistCount?: number;
+};
+
+const AppHeader = ({
+  onOpenWatchlist,
+  watchlistCount = 0,
+}: AppHeaderProps) => {
   return (
     <header className="flex flex-col gap-4 rounded-[2rem] border border-white/10 bg-white/6 px-5 py-4 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:px-6">
       <div className="flex items-center gap-3">
@@ -21,9 +29,12 @@ const AppHeader = () => {
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
-        <Button className="rounded-2xl bg-white text-slate-950 hover:bg-white/90">
+        <Button
+          className="rounded-2xl bg-white text-slate-950 hover:bg-white/90"
+          onClick={onOpenWatchlist}
+        >
           <BookmarkSimple size={18} weight="fill" />
-          Watchlist
+          Watchlist ({watchlistCount})
         </Button>
         <Avatar className="size-10 border border-white/10 bg-white/10">
           <AvatarFallback className="bg-transparent text-sm text-white">

@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-import {
-  AppHeader,
-  MovieCard,
-  MovieDetailPanel,
-  SearchShowcase,
-  WatchlistPanel,
-} from "@/components";
-import type { MovieDetails, MovieSearchItem } from "@/services";
-import { getMovieDetails, searchMovies } from "@/services";
-import { useWatchlistStore } from "@/store";
+import AppHeader from "@/components/app-header";
+import MovieCard from "@/components/movie-card";
+import MovieDetailSheet from "@/components/movie-detail-sheet";
+import SearchShowcase from "@/components/search-showcase";
+import WatchlistSheet from "@/components/watchlist-sheet";
+import type { MovieDetails, MovieSearchItem } from "@/services/omdb-service";
+import { getMovieDetails, searchMovies } from "@/services/omdb-service";
+import { useWatchlistStore } from "@/store/watchlist-store";
 
 const POPULAR_PICK_IDS = [
   "tt0816692",
@@ -35,6 +33,8 @@ const HomePage = () => {
   const [searchError, setSearchError] = useState<string | null>(null);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
   const [selectedImdbID, setSelectedImdbID] = useState<string | null>(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [isWatchlistOpen, setIsWatchlistOpen] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState<MovieDetails | null>(null);
   const [detailError, setDetailError] = useState<string | null>(null);
   const [isDetailLoading, setIsDetailLoading] = useState(false);
@@ -166,6 +166,11 @@ const HomePage = () => {
     setQuery(draftQuery.trim());
   };
 
+  const handleViewDetails = (imdbID: string) => {
+    setSelectedImdbID(imdbID);
+    setIsDetailOpen(true);
+  };
+
   const toggleWatchlistByMovie = (movie: MovieDetails) => {
     toggleWatchlist(movie);
   };
@@ -188,7 +193,10 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(244,63,94,0.18),_transparent_24%),radial-gradient(circle_at_right,_rgba(251,191,36,0.12),_transparent_18%),linear-gradient(180deg,_#060816_0%,_#0a1020_42%,_#05070f_100%)] text-white">
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-5 sm:px-6 lg:px-8 lg:py-8">
-        <AppHeader />
+        <AppHeader
+          onOpenWatchlist={() => setIsWatchlistOpen(true)}
+          watchlistCount={watchlist.length}
+        />
         <SearchShowcase
           query={draftQuery}
           onQueryChange={setDraftQuery}
@@ -229,7 +237,7 @@ const HomePage = () => {
                 poster={movie.Poster}
                 isSelected={selectedImdbID === movie.imdbID}
                 isSaved={isInWatchlist(movie.imdbID)}
-                onSelect={setSelectedImdbID}
+                onSelect={handleViewDetails}
                 onToggleWatchlist={toggleWatchlistById}
               />
             ))}
@@ -250,18 +258,29 @@ const HomePage = () => {
           ) : null}
         </section>
 
-        <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
-          <MovieDetailPanel
-            movie={selectedMovie}
-            isLoading={isDetailLoading}
-            errorMessage={detailError}
-            isSaved={
-              selectedMovie ? isInWatchlist(selectedMovie.imdbID) : false
+        <MovieDetailSheet
+          open={isDetailOpen}
+          onOpenChange={(open) => {
+            setIsDetailOpen(open);
+
+            if (!open) {
+              setSelectedImdbID(null);
+              setSelectedMovie(null);
+              setDetailError(null);
             }
-            onToggleWatchlist={toggleWatchlistByMovie}
-          />
-          <WatchlistPanel items={watchlist} onRemove={removeFromWatchlist} />
-        </section>
+          }}
+          movie={selectedMovie}
+          isLoading={isDetailLoading}
+          errorMessage={detailError}
+          isSaved={selectedMovie ? isInWatchlist(selectedMovie.imdbID) : false}
+          onToggleWatchlist={toggleWatchlistByMovie}
+        />
+        <WatchlistSheet
+          open={isWatchlistOpen}
+          onOpenChange={setIsWatchlistOpen}
+          items={watchlist}
+          onRemove={removeFromWatchlist}
+        />
       </div>
     </div>
   );

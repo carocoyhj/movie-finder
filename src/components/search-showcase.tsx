@@ -102,7 +102,7 @@ const SearchShowcase = ({
               <div className="flex items-center gap-3 text-rose-200">
                 <WarningCircle size={18} weight="fill" />
                 <p className="text-xs font-medium uppercase tracking-[0.3em]">
-                  Movie Explorer
+                  What you can do
                 </p>
               </div>
 
@@ -110,12 +110,6 @@ const SearchShowcase = ({
               <h3 className="mt-3 text-lg font-semibold text-white">
                 Discover and track your favorite movies
               </h3>
-
-              {/* Description */}
-              <p className="mt-2 text-sm text-white/70 leading-relaxed">
-                A clean and simple way to search, explore, and save movies you
-                love — all in one place.
-              </p>
 
               {/* Features */}
               <ul className="mt-5 space-y-3 text-sm text-white/75">
